@@ -1,6 +1,7 @@
 <?php
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Image_Size;
 use Elementor\Utils;
 use Elementor\Widget_Base;
 
@@ -148,16 +149,6 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 				]
 			]
 		);
-		$this->add_control(
-			'unique-control-name',
-			[
-				'label' => esc_html__( 'Control Label', 'textdomain' ),
-				'type' => Controls_Manager::TEXT,
-				'condition' => [
-					'show_align' => 'vertical',
-				],
-			]
-		);
 
 		$this->add_control(
 			'before_image',
@@ -179,8 +170,35 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 				],
 			]
 		);
+		$this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			[
+				'name'    => 'image_size',
+				'default' => 'full',
+			]
+		);
 
+		$this->end_controls_section();
 
+		$this->start_controls_section(
+			'image_compare_setting_section',
+			[
+				'label' => esc_html__( 'Setting', 'image-compare' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'show_overlay',
+			[
+				'label'        => esc_html__( 'Hide Overlay', 'image-compare' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'true'         => esc_html__( 'Show', 'image-compare' ),
+				'false'         => esc_html__( 'Hide', 'image-compare' ),
+				'return_value' => 'true',
+				'default'      => 'true',
+			]
+		);
 		$this->end_controls_section();
 	}
 
@@ -197,27 +215,34 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 		$settings         = $this->get_settings_for_display();
 		$before_image_url = $settings['before_image']['url'];
 		$after_image_url  = $settings['after_image']['url'];
+		$this->add_render_attribute( 'image_compare_setting', [
+			'id'           => 'image_compare-' . $this->get_id(),
+			'data-overlay' => $settings['show_overlay'],
+		] );
+
 		if ( $settings['show_align'] == 'horizontal' ) {
 			?>
-            <div id="horizontal">
-                <img src="<?php echo esc_url( $before_image_url ) ?>"
-                     alt="<?php esc_attr( 'image compare' ); ?>"/>
-                <img src="<?php echo esc_url( $after_image_url ) ?>"
-                     alt="<?php esc_attr( 'image compare' ); ?>"/>
+            <div id="horizontal" <?php echo $this->get_render_attribute_string( 'image_compare_setting' ) ?>>
+				<?php
+				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'before_image' );
+				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'after_image' );
+
+				?>
+
             </div>
 		<?php } else { ?>
 
             <div id="vertical">
                 <!-- The before image is first -->
-                <img src="<?php echo esc_url( $before_image_url ) ?>"
-                     alt="<?php esc_attr( 'image compare' ); ?>"/>
+                <img src="<?php echo esc_url( $before_image_url ) ?>"/>
                 <!-- The after image is last -->
-                <img src="<?php echo esc_url( $after_image_url ) ?>"
-                     alt="<?php esc_attr( 'image compare' ); ?>"/>
+                <img src="<?php echo esc_url( $after_image_url ) ?>"/>
             </div>
 			<?php
 
 		}
+        echo $settings['show_overlay'];
+
 	}
 
 }

@@ -4,8 +4,12 @@
      * @param $ The jQuery alias
      */
     var WidgetHelloWorldHandler = function (scope, $) {
+
         $(function () {
-            $(scope).find("#horizontal").twentytwenty();
+            var image_overlay = $(scope).find("#horizontal").data("overlay");
+            $(scope).find("#horizontal").twentytwenty({
+                no_overlay: image_overlay,
+            });
         });
 
         $(function () {
