@@ -204,6 +204,15 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 				'default' => esc_html__( 'After', 'image-compare' ),
 			]
 		);
+		$this->add_control(
+			'offset',
+			[
+				'label'       => esc_html__( 'Default Offset', 'image-compare' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => esc_html__( '0.7', 'image-compare' ),
+				'placeholder' => esc_html__( '0.7', 'image-compare' ),
+			]
+		);
 
 		$this->add_control(
 			'show_overlay',
@@ -273,6 +282,7 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 			'data-slider-hover' => $settings['move_slider_on_hover'],
 			'data-move-handle'  => $settings['move_with_handle_only'],
 			'data-click-move'   => $settings['click_to_move'],
+			'data-offset'   => $settings['offset'],
 		] );
 
 		?>
