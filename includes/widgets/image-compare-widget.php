@@ -196,6 +196,7 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 				'default' => esc_html__( 'Before', 'image-compare' ),
 			]
 		);
+
 		$this->add_control(
 			'after_label',
 			[
@@ -282,7 +283,7 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 			'data-slider-hover' => $settings['move_slider_on_hover'],
 			'data-move-handle'  => $settings['move_with_handle_only'],
 			'data-click-move'   => $settings['click_to_move'],
-			'data-offset'   => $settings['offset'],
+			'data-offset'       => $settings['offset'],
 		] );
 
 		?>
