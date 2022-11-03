@@ -20,6 +20,9 @@ Each element comes with a bunch of options to customize your website in every po
 
 == Frequently Asked Questions ==
 
+= This is customizable?  =
+Of course, You can customize every element.
+
 = Does image Compare work with all the themes?  =
 Image Compare works all the themes that respect the coding standards of WordPress set by its Codex. It is recommended to use Elementor’s Hello Theme, a lightweight blank canvas,
 to enjoy full flexibility when using Elementor, and optimize your experience.
@@ -51,6 +54,7 @@ Initial Release
 
 == Features ==
 
+1. Vertical and Horizontal Align
 1. Fully Customizable
 1. Fully Responsive
 

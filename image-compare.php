@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Image Compare
- * Description: This is elementor image comparison plugin.It's help you to compare between two image.
+ * Description: You can use this image compare plugin completely free.
  * Plugin URI:  https://github.com/habibur899/image-compare
  * Version:     1.0.0
  * Author:      Habibur Rahaman
