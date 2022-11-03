@@ -6,16 +6,21 @@
     var WidgetHelloWorldHandler = function (scope, $) {
 
         $(function () {
-            var image_overlay = $(scope).find("#horizontal").data("overlay");
-            $(scope).find("#horizontal").twentytwenty({
+            var image_overlay = $(scope).find(".image-compare-container").data("overlay");
+            var image_orientation = $(scope).find(".image-compare-container").data("orientation");
+            var image_before_label = $(scope).find(".image-compare-container").data("before-label");
+            var image_after_label = $(scope).find(".image-compare-container").data("after-label");
+            var image_move_slider_on_hover = $(scope).find(".image-compare-container").data("slider-hover");
+            var image_move_with_handle_only = $(scope).find(".image-compare-container").data("move-handle");
+            var image_click_to_move = $(scope).find(".image-compare-container").data("click-move");
+            $(scope).find(".image-compare-container").twentytwenty({
+                orientation: image_orientation,
                 no_overlay: image_overlay,
-            });
-        });
-
-        $(function () {
-            $(scope).find("#vertical").twentytwenty({
-                orientation: "vertical",
-                no_overlay: true,
+                before_label: image_before_label,
+                after_label: image_after_label,
+                move_slider_on_hover: image_move_slider_on_hover,
+                move_with_handle_only: image_move_with_handle_only,
+                click_to_move: image_click_to_move
             });
         });
     };

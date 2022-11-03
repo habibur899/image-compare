@@ -138,9 +138,9 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 		);
 
 		$this->add_control(
-			'show_align',
+			'show_orientation',
 			[
-				'label'   => esc_html__( 'Show Align', 'image-compare' ),
+				'label'   => esc_html__( 'Align', 'image-compare' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'horizontal',
 				'options' => [
@@ -189,12 +189,63 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 		);
 
 		$this->add_control(
+			'before_label',
+			[
+				'label'   => esc_html__( 'Before Label', 'image-compare' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Before', 'image-compare' ),
+			]
+		);
+		$this->add_control(
+			'after_label',
+			[
+				'label'   => esc_html__( 'After Label', 'image-compare' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => esc_html__( 'After', 'image-compare' ),
+			]
+		);
+
+		$this->add_control(
 			'show_overlay',
 			[
 				'label'        => esc_html__( 'Hide Overlay', 'image-compare' ),
-				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'type'         => Controls_Manager::SWITCHER,
 				'true'         => esc_html__( 'Show', 'image-compare' ),
-				'false'         => esc_html__( 'Hide', 'image-compare' ),
+				'false'        => esc_html__( 'Hide', 'image-compare' ),
+				'return_value' => 'true',
+				'default'      => 'true',
+			]
+		);
+
+		$this->add_control(
+			'move_slider_on_hover',
+			[
+				'label'        => esc_html__( 'Move Slider On Hover', 'image-compare' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'true'         => esc_html__( 'Show', 'image-compare' ),
+				'false'        => esc_html__( 'Hide', 'image-compare' ),
+				'return_value' => 'true',
+				'default'      => 'true',
+			]
+		);
+		$this->add_control(
+			'move_with_handle_only',
+			[
+				'label'        => esc_html__( 'Move With Handle Only', 'image-compare' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'true'         => esc_html__( 'Show', 'image-compare' ),
+				'false'        => esc_html__( 'Hide', 'image-compare' ),
+				'return_value' => 'true',
+				'default'      => 'true',
+			]
+		);
+		$this->add_control(
+			'click_to_move',
+			[
+				'label'        => esc_html__( 'Click To Move', 'image-compare' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'true'         => esc_html__( 'Show', 'image-compare' ),
+				'false'        => esc_html__( 'Hide', 'image-compare' ),
 				'return_value' => 'true',
 				'default'      => 'true',
 			]
@@ -212,36 +263,29 @@ class Image_Compare_Elementor_Widget extends Widget_Base {
 	 */
 	protected function render() {
 
-		$settings         = $this->get_settings_for_display();
-		$before_image_url = $settings['before_image']['url'];
-		$after_image_url  = $settings['after_image']['url'];
+		$settings = $this->get_settings_for_display();
 		$this->add_render_attribute( 'image_compare_setting', [
-			'id'           => 'image_compare-' . $this->get_id(),
-			'data-overlay' => $settings['show_overlay'],
+			'id'                => 'image_compare-' . $this->get_id(),
+			'data-overlay'      => $settings['show_overlay'],
+			'data-orientation'  => $settings['show_orientation'],
+			'data-before-label' => $settings['before_label'],
+			'data-after-label'  => $settings['after_label'],
+			'data-slider-hover' => $settings['move_slider_on_hover'],
+			'data-move-handle'  => $settings['move_with_handle_only'],
+			'data-click-move'   => $settings['click_to_move'],
 		] );
 
-		if ( $settings['show_align'] == 'horizontal' ) {
-			?>
-            <div id="horizontal" <?php echo $this->get_render_attribute_string( 'image_compare_setting' ) ?>>
-				<?php
-				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'before_image' );
-				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'after_image' );
-
-				?>
-
-            </div>
-		<?php } else { ?>
-
-            <div id="vertical">
-                <!-- The before image is first -->
-                <img src="<?php echo esc_url( $before_image_url ) ?>"/>
-                <!-- The after image is last -->
-                <img src="<?php echo esc_url( $after_image_url ) ?>"/>
-            </div>
+		?>
+        <div id="horizontal"
+             class="image-compare-container" <?php echo $this->get_render_attribute_string( 'image_compare_setting' ) ?>>
 			<?php
+			echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'before_image' );
+			echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_size', 'after_image' );
 
-		}
-        echo $settings['show_overlay'];
+			?>
+
+        </div>
+		<?php
 
 	}
 
